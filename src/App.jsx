@@ -10,6 +10,7 @@ import Main from './components/Main'
 import {Post, AddPost, AllPost, EditPost} from '../src/components/index'
 import useNetworkStatus from './customHook/useNetworkStatus'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react' 
 
 
 function App() {
@@ -30,7 +31,6 @@ function App() {
   if (isOnline) {
     return (
       <>
-      <div className='bg-slate-950 text-white'>
       <BrowserRouter>
       <Header/>
       <Routes>
@@ -44,7 +44,7 @@ function App() {
          </Routes>
       </BrowserRouter>
       <Analytics/>
-      </div>
+      <SpeedInsights/>
       </>
  )
   }else{
