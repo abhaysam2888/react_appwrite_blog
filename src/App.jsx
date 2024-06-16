@@ -9,6 +9,7 @@ import Header from './components/Header'
 import Main from './components/Main'
 import {Post, AddPost, AllPost, EditPost} from '../src/components/index'
 import useNetworkStatus from './customHook/useNetworkStatus'
+import { Analytics } from '@vercel/analytics/react'
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
           <Route path="/allpost" element={<AllPost/>}/>
          </Routes>
       </BrowserRouter>
+      <Analytics/>
       </div>
       </>
  )
