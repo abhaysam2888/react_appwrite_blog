@@ -1,0 +1,20 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>https://codercorner.vercel.app/</loc>
+	</url>
+	<url>
+		<loc>https://codercorner.vercel.app/addpost</loc>
+	</url>
+	<url>
+		<loc>https://codercorner.vercel.app/allpost</loc>
+	</url>
+	<url>
+		<loc>https://codercorner.vercel.app/login</loc>
+	</url>
+	<url>
+		<loc>https://codercorner.vercel.app/signup</loc>
+	</url>
+	<url>
+		<loc>https://codercorner.vercel.app/post/abhay-is-a-boy</loc>
+	</url>
+</urlset>

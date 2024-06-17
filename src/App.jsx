@@ -10,7 +10,7 @@ import Main from './components/Main'
 import {Post, AddPost, AllPost, EditPost} from '../src/components/index'
 import useNetworkStatus from './customHook/useNetworkStatus'
 import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/react' 
+import { SpeedInsights } from '@vercel/speed-insights/react'
 
 
 function App() {
