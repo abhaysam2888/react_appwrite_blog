@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     articles: [],
-    article: [],
+    UpdateArticle: [],
+    documentId: "",
     loading: true,
 }
 
@@ -15,12 +16,18 @@ export const getPostSlice = createSlice({
             state.loading = false
         },
         getArticleData: (state, action) => {
-            state.article = action.payload
+            state.UpdateArticle = action.payload
             state.loading = false
         },
+        getSlug: (state, action) => {
+            state.loading = false
+            localStorage.setItem('slug', action.payload)
+            state.documentId = action.payload
+        }
     }
 })
 
-export const {  getArticlesData, getArticleData } = getPostSlice.actions
+
+export const {  getArticlesData, getArticleData, getSlug } = getPostSlice.actions
 
 export default getPostSlice.reducer

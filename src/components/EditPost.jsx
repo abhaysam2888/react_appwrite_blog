@@ -8,7 +8,7 @@ function EditPost() {
     const {slug} = useParams()
     const navigate = useNavigate()
     if (slug) useArticleFetch(slug);
-    const post = useSelector((state) => state.data.article)
+    const post = useSelector((state) => state.data.UpdateArticle)
     
     useEffect(() => {
         if (!slug) {

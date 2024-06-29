@@ -3,19 +3,26 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import service from "../appwrite/config";
 import {Button} from "../components/index";
 import parse from "html-react-parser";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import TracingBeam from "../components/ui/tracing-beam";
+import { getSlug } from "../store/getPostSlice";
 
 export default function Post() {
     const [post, setPost] = useState(null);
     const { slug } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const userData = useSelector((state) => state.auth.userCred);
+    const {documentId} = useSelector((state) => state.data);
+
     const isAuthor = post && userData ? post.userId === userData.userId : false;
-    
+
     useEffect(() => {
         if (slug) {
-            service.getPost(slug).then((post) => {
+            const slug = localStorage.getItem('slug')
+            dispatch(getSlug(slug))
+            service.getPost(documentId || slug).then((post) => {
                 if (post) setPost(post);
                 else navigate("/");
             });
@@ -32,35 +39,50 @@ export default function Post() {
     };
 
     return post ? (
-        <div className="py-8 mt-20">
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-                    <img
-                        src={service.getFilePreviews(post.image)}
-                        alt={post.title}
-                        className="rounded-xl"
-                        loading="lazy"
-                    />
+        <TracingBeam className="px-6 mt-8">
+            <style>
+                {`
+                .scrollBar::-webkit-scrollbar {
+                            display: none;
+                }
+                `}
+            </style>
+      <div className="max-w-2xl mx-auto antialiased pt-4 relative">
+          <div className="mb-10">
+            <div className="bg-black text-white rounded-full text-sm w-fit px-4 py-1 mb-4">
+            Author : {userData && userData.name}
+            </div>
 
-                    {isAuthor && (
-                        <div className="absolute right-6 top-6">
+            <h1 className="text-6xl w-full my-10 px-4 font-bold max-[714px]:text-5xl max-[588px]:text-4xl prose dark:prose-invert max-[461px]:text-3xl max-[461px]:my-5 max-[397px]:text-2xl">
+               {post.title}
+            </h1>
+
+            <div>
+            {isAuthor && (
+                        <div className="absolute right-6 top-6 max-sm:top-44 max-sm:right-3 max-[520px]:relative max-[520px]:top-0 max-[520px]:px-4 max-[520px]:right-0 max-[520px]:mb-4">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3">
+                                <Button bgColor="bg-green-500" className="inline-flex animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 mr-3">
                                     Edit
                                 </Button>
                             </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost}>
+                            <Button className="inline-flex animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000,45%,#0000,55%,#000)] bg-[length:200%_100%] px-6 text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50" onClick={deletePost}>
                                 Delete
                             </Button>
                         </div>
                     )}
-                </div>
-                <div className="w-full mb-6">
-                    <h1 className="text-2xl font-bold">{post.title}</h1>
-                </div>
-                <div className="browser-css">
-                    {parse(post.content)}
-                    </div>
-        </div>
+            <img
+            src={service.getFilePreviews(post.image)}
+            alt={post.title}
+            className="rounded-xl"
+            loading="lazy"
+            />
+              <div className="mt-5 prose dark:prose-invert overflow-scroll scrollBar">
+                {parse(post.content)}
+              </div>
+            </div>
+          </div>
+      </div>
+    </TracingBeam>
     ) : null;
 }
 
