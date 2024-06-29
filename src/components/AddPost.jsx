@@ -42,7 +42,7 @@ export default function AddPost({ post }) {
          setloading(true)
           try {
             const response = await axios({
-              url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBy1lwgXsbi2bv-bOG3ju9TQi76OKf-izY`,
+              url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${conf.chatGptApiKey}`,
               method: 'post',
               headers: {
                 'Content-Type': 'application/json',
