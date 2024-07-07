@@ -94,6 +94,7 @@ export default function AddPost({ post }) {
         // Ai search end
 
     const submit = async (data) => {
+        console.log(data);
         setDisabel(true)
         // update post logic
         if (post) {

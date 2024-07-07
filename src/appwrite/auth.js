@@ -1,5 +1,5 @@
 import conf from '../conf/conf'
-import { Client, Account, ID } from "appwrite";
+import { Client, Account, ID, OAuthProvider } from "appwrite";
 
 export class AuthService{
     client = new Client();
@@ -34,13 +34,26 @@ export class AuthService{
         }
     }
 
-    async getCurrentUser() {
+    async userGoogleLogin() {
         try {
-            return await this.account.get()
+            return this.account.createOAuth2Session(
+                OAuthProvider.Google,
+                "http://localhost:5173/",
+                "http://localhost:5173/404"
+            )
         } catch (error) {
-            throw error;
+            throw error
         }
     }
+
+    async getCurrentUser() {
+        try {
+            return await this.account.getSession('current');
+        } catch (error) {
+            console.log('user not logged')
+        }
+    }
+
     async logout() {
         try {
             return await this.account.deleteSessions()

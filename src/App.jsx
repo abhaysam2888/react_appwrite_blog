@@ -12,7 +12,7 @@ import useNetworkStatus from './customHook/useNetworkStatus'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import Navbar from './components/Navbar'
-import BackgroundBeamsDemo from './components/Grid'
+import Failed from './components/Failed'
 
 
 function App() {
@@ -48,7 +48,7 @@ function App() {
           <Route path="/addpost" element={<AddPost/>}/>
           <Route path="/post/:slug" element={<Post/>}/>
           <Route path="/edit-post/:slug" element={<EditPost/>}/>
-          {/* <Route path="/test" element={<BackgroundBeamsDemo/>}/> */}
+          <Route path="/404" element={<Failed/>}/>
          </Routes>
       </BrowserRouter>
       <Analytics/>
