@@ -39,7 +39,7 @@ export class AuthService{
             return this.account.createOAuth2Session(
                 OAuthProvider.Google,
                 "http://localhost:5173/",
-                "http://localhost:5173/404"
+                "http://localhost:5173/404",
             )
         } catch (error) {
             throw error
