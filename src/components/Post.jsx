@@ -50,7 +50,7 @@ export default function Post() {
       <div className="max-w-2xl mx-auto antialiased pt-4 relative">
           <div className="mb-10">
             <div className="bg-black text-white rounded-full text-sm w-fit px-4 py-1 mb-4">
-            Author : {userData && userData.name}
+            Author : {`${post && post.username.charAt(0).toUpperCase()}${post && post.username.split('').splice(1,post.username.length).join('')}`}
             </div>
 
             <h1 className="text-6xl w-full my-10 px-4 font-bold max-[714px]:text-5xl max-[588px]:text-4xl prose dark:prose-invert max-[461px]:text-3xl max-[461px]:my-5 max-[397px]:text-2xl">

@@ -1,18 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faUser, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import Button from "./Button";
 import { useSelector, useDispatch } from "react-redux";
-import { getSlug } from "../store/getPostSlice";
-import useArticlesFetch from '../customHook/useArticlesFetch';
+import { getArticlesData, getSlug } from "../store/getPostSlice";
 import { Link } from "react-router-dom";
 import service from "../appwrite/config";
 import parse from "html-react-parser";
+import { Query } from 'appwrite';
 
 export default function AllPost() {
-  useArticlesFetch()
-    const {articles, loading} = useSelector((state) => state.data)
-    const dispatch = useDispatch()
+   let [limit, setLimit] = useState(5) 
+   const [matchData, setMatchData] = useState(true)
+   const dispatch = useDispatch();
+   const {articles, loading} = useSelector((state) => state.data)
+
+    const handelLoad = () => {
+      setLimit((limit) => limit + 4)
+    }
+
+      useEffect(() => {
+        let handelClicks = async() => {
+        const posts = await service.getPosts(Query.limit(limit || 500));
+          if (posts) {
+              dispatch(getArticlesData(posts.documents));
+              if (posts.total < limit) {
+                setMatchData(false)
+                console.log(limit);
+              }
+            }
+        }
+        if (matchData) {
+          handelClicks()
+        }
+      },[limit, matchData, dispatch])
+
+    
+
+    
 
     const handelClick = (slug) => {
       dispatch(getSlug(slug))
@@ -90,6 +115,10 @@ export default function AllPost() {
           ))
         }
         </div>
+      </div>
+      <div className="flex justify-center items-center flex-col mb-5 mt-5 w-full">
+      <button className={`px-3 py-1 max-w-32 bg-gray-600 rounded-full ${matchData ? 'block' : "hidden"}`} onClick={handelLoad}>Load More</button>
+      <p className={`${matchData ? 'hidden' : "block"} text-2xl`}>No more Articles</p>
       </div>
     </div>
   );

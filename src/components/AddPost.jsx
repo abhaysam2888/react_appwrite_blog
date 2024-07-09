@@ -94,7 +94,6 @@ export default function AddPost({ post }) {
         // Ai search end
 
     const submit = async (data) => {
-        console.log(data);
         setDisabel(true)
         // update post logic
         if (post) {
@@ -126,9 +125,9 @@ export default function AddPost({ post }) {
                 const fileId = file.$id;
                 data.image = fileId;
                 data.slug = f;
-                const dbPost = await service.createPost({ ...data, userid: userData.$id, email:userData.email, username:userData.name });
+                const dbPost = await service.createPost({ ...data, userid: userData.$id, email:userData.email, username:userData.name});
 
-                if (dbPost) {
+                if (dbPost && !dbPost.error) {
                     dispatch(getSlug(dbPost.$id))
                     navigate(`/post/${dbPost.title}`);
                 }
@@ -251,7 +250,7 @@ export default function AddPost({ post }) {
                     Generate
                 </div>
 
-                <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className='w-full mt-5' disabled={disabel}>
+                <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className={`w-full mt-5 ${disabel ? "bg-red-500" : "bg-blue-500"}`} disabled={disabel}>
                     {post ? "Update" : "Submit"}
                 </Button>
             </div>

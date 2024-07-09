@@ -34,26 +34,14 @@ export class AuthService{
         }
     }
 
-    async userGoogleLogin() {
-        try {
-            return this.account.createOAuth2Session(
-                OAuthProvider.Google,
-                "http://localhost:5173/",
-                "http://localhost:5173/404",
-            )
-        } catch (error) {
-            throw error
-        }
-    }
-
     async getCurrentUser() {
         try {
-            return await this.account.getSession('current');
+            return await this.account.get()
         } catch (error) {
-            console.log('user not logged')
+            console.log(error)
         }
     }
-
+    
     async logout() {
         try {
             return await this.account.deleteSessions()

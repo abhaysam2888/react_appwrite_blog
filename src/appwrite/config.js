@@ -32,6 +32,7 @@ export class Service{
             )
         } catch (error) {
             console.log(`error in create post ${error}`);
+            alert(error)
         }
     }
 
@@ -81,15 +82,19 @@ export class Service{
         }
     }
 
-    async getPosts(queries = [Query.equal("status", "active")]){
+    async getPosts(queries){
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                queries,
+                [
+                    Query.equal("status", "active"),
+                    queries
+                ]
             )
         } catch (error) {
             console.log("Appwrite serive :: getPosts :: error", error);
+
             return false
         }
     }
