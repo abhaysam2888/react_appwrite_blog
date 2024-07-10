@@ -21,7 +21,7 @@ function Header() {
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link to={'/'}>
                 <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                    <img src="/favicon.ico" className="h-10" alt="codecorner Logo" />
+                    <img src="./favicon.ico" className="h-10" alt="codecorner Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-black">Codecorner</span>
                 </div>
                 </Link>
